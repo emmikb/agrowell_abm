@@ -28,10 +28,11 @@ The main model is contained in `agrowell_abm.py`.
 Code to generate the payoff table is contained in `payoff.py`
 Code to generate the figures from the paper is contained in `read_abm_data.R` 
 (Fig. 2--3) and `survey_analysis/log_model_ABM_stan_no_mlm.R`.
-The results of the Bayesian regression are contained in `lfit_no_mlm.Rda`
+The results of the Bayesian regression are contained in `lfit_no_mlm.Rda` 
+(Fig. 1)
 
 
-To reproduce the model runs described in the paper:
+The command to reproduce the model runs described in the paper is:
 ```
 python parallel_simulation.py
 ```
