@@ -5,9 +5,6 @@ library(ggplot2)
 library(gridExtra)
 select <- dplyr::select
 
-dr <- "/home/emily/SL_ABM/param_check/"  #directory to write out plots
-setwd('/data/emily/param_check/')
-
 ############################################################################################################################
 #LOAD DATASETS
 ############################################################################################################################

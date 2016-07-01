@@ -1,3 +1,5 @@
+#process raw survey data to create variables for analysis
+
 require(dplyr)
 require(gdata)
 require(ggplot2)
@@ -6,33 +8,12 @@ require(ggmcmc)
 require(BEST)
 require(foreign)
 
+c1 <- tbl_df(read.csv("c1.csv", stringsAsFactors = FALSE))
+
 #number of fields
 fields <- c1[,c("LAN1B.01", "LAN1B.02", "LAN1B.03", "LAN1B.04", "LAN1B.05", "LAN1B.06", "LAN1B.07", "LAN1B.08" )]
 field.count <- rowSums(!is.na(fields))
 c1$fieldcount <- field.count
-
-
-#number of plots of each type
-pf.count <- rowSums(fields == 1, na.rm = T)
-hl.count <- rowSums(fields == 2, na.rm = T)
-hg.count <- rowSums(fields == 3, na.rm = T)
-chena.count <- rowSums(fields == 4, na.rm = T)
-c1$paddy.count <- pf.count
-c1$highland.count <- hl.count
-c1$hg.count <- hg.count
-c1$chena.count <- chena.count
-
-
-#diversification
-pf.flag <- ifelse(pf.count > 0, 1, 0)
-hl.flag <- ifelse(hl.count > 0, 1, 0)
-hg.flag <- ifelse(hg.count > 0, 1, 0)
-ch.flag <- ifelse(chena.count > 0, 1, 0)
-diverse <- pf.flag + hl.flag + hg.flag + ch.flag
-c1$diverse_score <- diverse
-diverse.flag <- ifelse(diverse > 1, 1, 0)
-c1$diverse_flag <- diverse.flag
-
 
 #position of paddy fields
 #he = 1, me = 2, te = 3
@@ -63,20 +44,9 @@ te[is.na(te)] <- 0
 c1$tail_end <- te
 c1$tail_end_prop <- prop.te
 
-#cultivates on head-end field
-he <- apply(paddy.position[,], MARGIN = 1, function(x) any(x == 1))
-ifelse(he, 1, 0)
-he[is.na(he)] <- 0
-#c1$head_end <- he
-te <- apply(paddy.position[,], MARGIN = 1, function(x) any(x == 3))
-ifelse(te, 1, 0)
-te[is.na(te)] <- 0
-#c1$tail_end <- te
-
 #minority flag (1 = S, 2 = T)
 sinhalese <- ifelse(c1$HH_K.1 == 1, 1,0)
 c1$sinhalese <- sinhalese
-
 
 #female flag (1 = M, 2 = F)
 female <- ifelse(c1$HH2_D.01 == 2, 1, 0)
@@ -114,34 +84,7 @@ c1$major_flag = c1$major + c1$major_minor
 agrowell_user <- rowSums(irrigation == 7, na.rm = T)
 c1$agrowell_user <- ifelse(agrowell_user > 0, 1,0)
 
-
-#agrowell owner
-agrowell_lands <- c1[,c("LAN3D.1", "LAN3D.2", "LAN3D.3")]
-agrowell_owner <- rowSums(agrowell_lands == 1, na.rm = T)
-c1$agrowell_owner <- ifelse(agrowell_owner > 0, 1, 0)
-
-
-#other employment
-occupation <- c1[,c("HH2_H.01", "HH2_H.02")]
-second_oc <- rowSums(occupation != 611, na.rm = T)
-c1$second_oc <- ifelse(second_oc > 0, 1, 0)
-
-
-#past bethma
-c1$past_bm <- ifelse(c1$ADP1_B1 == 1, 1, 0)
-
-
 #fo membership
 c1$fo <- ifelse(c1$SAT1_1 == 1, 1, 0)  #note that there were entries with value of 3, not sure what this meant, counted it as no
 
-#practiced in Y2014
-c1$bm_2014 <- ifelse(c1$ADP1_C1 == 2, 1, ifelse(c1$ADP1_C1 == 3, 1, 0))
 
-#write out dataframe
-#save(c1, file="c1_data_full.Rda")
-
-#total acres paddy
-acres <- c1[,c("LAN1C.01", "LAN1C.02", "LAN1C.03", "LAN1C.04", "LAN1C.05", "LAN1C.06", "LAN1C.07", "LAN1C.08" )]
-acres[fields > 1] <- NA  #paddy fields only
-acres_paddy <- rowSums(acres, na.rm=T)
-c1$acres_paddy <- acres_paddy

@@ -8,7 +8,6 @@ library(purrr)
 rstan_options(auto_write = TRUE)
 options(mc.cores = parallel::detectCores())
 
-source('load_seads_data.R')
 source('variable_creation.R')
 
 ###############################################
@@ -42,7 +41,7 @@ ofc_data <- list(n=n, y = y, aw = c1$agrowell_user, major = c1$major,
 
 lfit_no_mlm <- stan('log_model_ABM_stan_no_mlm.stan', model_name = "OFC no MLM", data = ofc_data, iter = 2000, chains = 2)
 save(lfit_no_mlm, file = "lfit_no_mlm.Rda")
-# my_sso <- launch_shinystan(lfit_no_mlm)
+#my_sso <- launch_shinystan(lfit_no_mlm)
 
 par_names <- names(lfit_no_mlm) %>% purrr::keep(~str_detect(.,"^beta_"))
 new_par_names <- str_replace_all(par_names,
