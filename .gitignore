@@ -1,0 +1,22 @@
+*.aux
+*.bak
+*.bbl
+*.blg
+*.ilg
+*.log
+*.out
+*.synctex.gz
+*.pyc
+~$*.docx
+.spyderproject
+.Rproj.user
+.RData
+.Rhistory
+/old.pylintrc
+/.spyderworkspace
+/article/wsc16LatexPaper.zip
+/article/Exported Items.bib
+/article/My Collection.bib
+/Exported Items.bib
+/survey_analysis/g.zip
+/survey_analysis/log_model_ABM_stan_no_mlm.rda
