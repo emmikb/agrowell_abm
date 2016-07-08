@@ -1,8 +1,8 @@
 This repository contains the code for the ABM described in 
-E.K. Burchfield and J. Gilligan, "Dynamics of Individual and Collective 
+E.K. Burchfield and J.M. Gilligan, "Dynamics of Individual and Collective 
 Agricultural Adaptation to Water Scarcity," accepted for publication
 *Proceedings of the 2016 Winter Simulation Conference,"
-T.M.K. Roeder, P.I. Frazier, R. Szechman, and E. Zhou, eds.
+T.M.K. Roeder, P.I. Frazier, R. Szechtman, E. Zhou, T. Huschka, and S.E. Chick, eds.
 
 ## ABSTRACT
 
